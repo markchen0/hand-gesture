@@ -10,27 +10,27 @@ using namespace cv;
 
 void paste(cv::Mat dst, cv::Mat src, int x, int y, int width, int height){
   cv::Mat resized_img;
-	cv::resize(src, resized_img, cv::Size(width, height));
+  cv::resize(src, resized_img, cv::Size(width, height));
 
-	if (x >= dst.cols || y >= dst.rows) return;
-	int w = (x >= 0) ? std::min(dst.cols - x, resized_img.cols) : std::min(std::max(resized_img.cols + x, 0), dst.cols);
-	int h = (y >= 0) ? std::min(dst.rows - y, resized_img.rows) : std::min(std::max(resized_img.rows + y, 0), dst.rows);
-	int u = (x >= 0) ? 0 : std::min(-x, resized_img.cols - 1);
-	int v = (y >= 0) ? 0 : std::min(-y, resized_img.rows - 1);
-	int px = std::max(x, 0);
-	int py = std::max(y, 0);
+  if (x >= dst.cols || y >= dst.rows) return;
+  int w = (x >= 0) ? std::min(dst.cols - x, resized_img.cols) : std::min(std::max(resized_img.cols + x, 0), dst.cols);
+  int h = (y >= 0) ? std::min(dst.rows - y, resized_img.rows) : std::min(std::max(resized_img.rows + y, 0), dst.rows);
+  int u = (x >= 0) ? 0 : std::min(-x, resized_img.cols - 1);
+  int v = (y >= 0) ? 0 : std::min(-y, resized_img.rows - 1);
+  int px = std::max(x, 0);
+  int py = std::max(y, 0);
 
-	cv::Mat roi_dst = dst(cv::Rect(px, py, w, h));
-	cv::Mat roi_resized = resized_img(cv::Rect(u, v, w, h));
-	roi_resized.copyTo(roi_dst);
+  cv::Mat roi_dst = dst(cv::Rect(px, py, w, h));
+  cv::Mat roi_resized = resized_img(cv::Rect(u, v, w, h));
+  roi_resized.copyTo(roi_dst);
 }
 
 void PlaySound(string file){
-	static char cmd[256];
+  static char cmd[256];
 
-	if (strlen(file.c_str()) > 200) return;	// buffer overflow prevention
-	sprintf(cmd, "paplay %s.wav &> /dev/null &", file.c_str());
-	system(cmd);
+  if (strlen(file.c_str()) > 200) return;	// buffer overflow prevention
+  sprintf(cmd, "paplay %s.wav &> /dev/null &", file.c_str());
+  system(cmd);
 }
 
 
@@ -44,25 +44,25 @@ std::pair<Point2f, float> findMinEnclosingCircle(const vector<Point>& goodPolyCu
 }
 
 float getDistance(Point a, Point b){
-	float d= sqrt(fabs( pow(a.x-b.x,2) + pow(a.y-b.y,2) )) ;  
-	return d;
+  float d= sqrt(fabs( pow(a.x-b.x,2) + pow(a.y-b.y,2) )) ;  
+  return d;
 }
 
 float getRadian(Point s, Point f, Point e){
-	float l1 = getDistance(f,s);
-	float l2 = getDistance(f,e);
-	float dot=(s.x-f.x)*(e.x-f.x) + (s.y-f.y)*(e.y-f.y);
-	float angle = acos(dot/(l1*l2));
-	angle=angle;
-	return angle;
+  float l1 = getDistance(f,s);
+  float l2 = getDistance(f,e);
+  float dot=(s.x-f.x)*(e.x-f.x) + (s.y-f.y)*(e.y-f.y);
+  float angle = acos(dot/(l1*l2));
+  angle=angle;
+  return angle;
 }
 
 vector<int> k_curvature(vector<Point> contour, vector<Vec4i> defects, int k, float threshold){
-	vector<float> curvature = vector<float>(contour.size());
+  vector<float> curvature = vector<float>(contour.size());
   vector<int> one_fin_defects;
 
-	for (int i = 0; i < defects.size(); i++) {
-		for(int j=-5; j<=5; j++){
+  for (int i = 0; i < defects.size(); i++) {
+    for(int j=-5; j<=5; j++){
         Point p0 = contour[defects[i][2] - k + j];
         Point p1 = contour[defects[i][2] + j];
         Point p2 = contour[defects[i][2] + k + j];
@@ -70,9 +70,9 @@ vector<int> k_curvature(vector<Point> contour, vector<Vec4i> defects, int k, flo
         if (curvature[i] < threshold){
           one_fin_defects.push_back(i);
         }
-		}
-	}
-	return one_fin_defects;
+    }
+  }
+  return one_fin_defects;
 }
 
 std::pair<Point, double> findMaxInscribedCircle(
@@ -95,7 +95,6 @@ std::pair<Point, double> findMaxInscribedCircle(
     }
     c.second = maxdist;
   }
-
   return c;
 }
 
@@ -197,7 +196,7 @@ int main(int argc, char *argv[])
       center.x = cv::saturate_cast<int>((faces[i].x + faces[i].width * 0.5) * scale);
       center.y = cv::saturate_cast<int>((faces[i].y + faces[i].height * 0.5) * scale);
       radius = cv::saturate_cast<int>((faces[i].width + faces[i].height) * 0.25 * scale);
-    //cover face
+      //cover face
       cv::Rect roi_rect(center.x - radius, center.y - radius, radius * 2, radius * 2);
       cv::Mat mosaic = face_frame(roi_rect);
       if(first == 0){
@@ -229,7 +228,7 @@ int main(int argc, char *argv[])
 
     // 4. recognize hand shape
     vector< vector<cv::Point> > contours;
-     vector<cv::Vec4i> hierarchy;
+    vector<cv::Vec4i> hierarchy;
     cv::Mat temp = diff.clone();
     cv::findContours(temp, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
 
@@ -272,11 +271,11 @@ int main(int argc, char *argv[])
           if(defects[i][3]>inscribed.second && 
           getRadian(contours[maxId][defects[i][0]], contours[maxId][defects[i][2]], contours[maxId][defects[i][1]])<atan(1)*4*95/180
           ){
-          fin_defects.push_back(defects[i]);
-          fin++;
-          circle(diff,contours[maxId][defects[i][0]], 8, cv::Scalar(180,180,180),2,4);
-          circle(diff,contours[maxId][defects[i][1]], 8, cv::Scalar(180,180,180),2,4);
-          circle(diff,contours[maxId][defects[i][2]], 4, cv::Scalar(100,0,0),2,4);
+            fin_defects.push_back(defects[i]);
+            fin++;
+            circle(diff,contours[maxId][defects[i][0]], 8, cv::Scalar(180,180,180),2,4);
+            circle(diff,contours[maxId][defects[i][1]], 8, cv::Scalar(180,180,180),2,4);
+            circle(diff,contours[maxId][defects[i][2]], 4, cv::Scalar(100,0,0),2,4);
           }
     
         }
