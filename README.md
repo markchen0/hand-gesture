@@ -19,4 +19,4 @@ esc: 終了
 __※注意※__　　
 音の出力でlinuxのコマンド paplay を呼び出しているため、linux以外だとエラーが生じると思われます。
 
-動作の様子：demonstration.mp4
+動作の様子：demonstrate.mp4
