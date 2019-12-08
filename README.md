@@ -7,8 +7,8 @@ __動作の様子：demonstrate.mp4__
 ## 起動
 まずOpenCVとC++が必要です。
 ```
-$ git clone https://github.com/markchen0/Hand_Gesture.git
-$ cd Hand_Gesture
+$ git clone https://github.com/markchen0/hand-gesture.git
+$ cd hand-gesture
 $ cd src
 $ make gesture
 $ ./gesture
