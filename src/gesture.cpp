@@ -416,7 +416,8 @@ int main(int argc, char *argv[])
           paste(frame, picture, 10, 300, 220, 160);
         }
         
-
+        //detecting hand motion doesn't work if background noise is big
+        /*
         if(most_common == "open" && pre_most_common == "open"){
           if(count_bye >= 5){
             shut_down++;
@@ -441,11 +442,15 @@ int main(int argc, char *argv[])
           count_open = 0;
           count_bye = 0;
         }
+        */
 
         putText(frame, most_common, Point(20,100), FONT_HERSHEY_SIMPLEX, 2, Scalar(0,0,255), 1, CV_AA); 
         pre_most_common = most_common;
       }
     }
+    
+    //this doesn't work except linux
+    /*
     if(sound_ok == 10){
       PlaySound(most_common);
     }
@@ -458,6 +463,7 @@ int main(int argc, char *argv[])
         paste(pure_frame, picture, 10, 300, 220, 160);
         cv::imwrite("peace_photo.jpg", pure_frame);
     }
+    */
 
     if(shut_down > 0){
       shut_down++;
