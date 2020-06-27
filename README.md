@@ -2,6 +2,8 @@
 ## 概要
 OpenCVを用いて作成したジェスチャー認識のプログラムです。ビデオカメラに映った手が示すジェスチャーをリアルタイムで認識し、ジェスチャーに対応する名前と画像を映像上に表示します。顔認識も行っているため、顔が同時に写っていても影響は小さいです。
 
+This is a gesture recognition program created using OpenCV. It recognizes the hand gestures on a video camera. The name and image are displayed on the video in real time. Face recognition is also performed, so even if the faces are in the picture at the same time, the effect is minimal.  
+
 __動作の様子：demonstrate.mp4__
 
 ## 起動
@@ -24,3 +26,16 @@ $ ./gesture
  
 スペース： 背景差分に使う背景画像の更新  
 esc: 終了
+
+
+First, press the spacekey while you are not in the screen. Then try to make a hand shape in front of the camera.
+
+Also, if your face is not well recognized, you can improve your accuracy by keeping your face out of the picture.
+
+Lighting, lighting reflections, and objects close to your skin tone in the background will reduce the accuracy.
+
+Recognize 10 gestures below.
+・rock, 1, good, piece sign, fox, 3, OK, 4, open hand, grab (all fingers slightly bent)
+ 
+Space: Update the background image used for background differences.  
+esc: quit
